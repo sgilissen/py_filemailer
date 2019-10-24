@@ -51,10 +51,10 @@ def config_check():
         from_email = config['from_email']
         subject_prefix = config['subject_prefix']
         server = config['server']
-        msgbody = config['body']
+        msgbody = config['msgbody']
 
         send_mail(username, password, from_email, args.recipient,
-                  subject_prefix + " " + args.file, args.file, server, msgbody)
+                  subject_prefix + basename(args.file), args.file, server, msgbody)
 
     else:
         print("[{0}] Either file is missing or is not readable, creating file...".format(now))
@@ -71,7 +71,7 @@ def config_check():
                                       'server': server, 'msgbody': msgbody}))
 
         send_mail(username, password, from_email, args.recipient,
-                  subject_prefix + " " + args.file, args.file, server, msgbody)
+                  subject_prefix + basename(args.file), args.file, server, msgbody)
 
 
 def send_mail(user, password, from_email, to_email, subject, attachment, server, msgbody):
@@ -100,7 +100,7 @@ def send_mail(user, password, from_email, to_email, subject, attachment, server,
         # Add header as key/value pair to attachment part
         part.add_header(
             "Content-Disposition",
-            f"attachment; filename= %s" % basename(attachment),
+            "attachment; filename= %s" % basename(attachment),
         )
 
         # Add body of the text
@@ -117,3 +117,4 @@ def send_mail(user, password, from_email, to_email, subject, attachment, server,
 
 
 config_check()
+
