@@ -38,6 +38,7 @@ args = parser.parse_args()
 
 now = datetime.datetime.now()
 
+
 def config_check():
     if os.path.isfile(configfile) and os.access(configfile, os.R_OK):
         # checks if file exists
@@ -54,8 +55,6 @@ def config_check():
 
         send_mail(username, password, from_email, args.recipient,
                   subject_prefix + " " + args.file, args.file, server, msgbody)
-
-
 
     else:
         print("[{0}] Either file is missing or is not readable, creating file...".format(now))
@@ -115,7 +114,6 @@ def send_mail(user, password, from_email, to_email, subject, attachment, server,
         with smtplib.SMTP_SSL(server, port, context=context) as mailserver:
             mailserver.login(user, password)
             mailserver.sendmail(from_email, to_email, body)
-
 
 
 config_check()
